@@ -1,4 +1,3 @@
-import { data } from "react-router-dom";
 
 const URL = "http://localhost:5212/api/product";
 
@@ -17,4 +16,14 @@ export const addProduct = async (product) => {
         body: JSON.stringify(product),
       });
   };
+
+export const deleteProduct = async (id, product) => {
+  await fetch(`${URL}/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(product),
+  });
+};
 
