@@ -1,54 +1,38 @@
 using Microsoft.AspNetCore.Mvc;
-using ProductApi.Data;
-using ProductApi.Models;
+using ProductApi.DTO;
+using ProductApi.Services;
+
 namespace ProductApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IProductService _service;
 
-        public ProductController(AppDbContext context)
+        public ProductController(IProductService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
         public IActionResult GetProducts()
         {
-            return Ok(_context.Products.ToList());
+            return Ok(_service.GetAllProducts());
         }
 
         [HttpPost]
-        public IActionResult CreateProduct(Product product)
+        public IActionResult Create(ProductDto dto)
         {
-            _context.Products.Add(product);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, product);
+            var product = _service.CreateProduct(dto.Name, dto.Price);
+            return Ok(product);
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(int id)
         {
-            var product = _context.Products.Find(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            _context.Products.Remove(product);
-            _context.SaveChanges();
-            return NoContent();
+            _service.DeleteProduct(id);
+            return Ok();
         }
-         [HttpGet("{id}")]
-        public IActionResult GetProduct(int id)
-        {
-            var product = _context.Products.Find(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return Ok(product);
-        }
+        
     }
 }

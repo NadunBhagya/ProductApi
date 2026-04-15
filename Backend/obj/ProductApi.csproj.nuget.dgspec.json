@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nadun\\ProductApi\\Backend\\ProductApi.csproj": {}
+    "C:\\Users\\nadun\\ProductApi\\backend\\ProductApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nadun\\ProductApi\\Backend\\ProductApi.csproj": {
+    "C:\\Users\\nadun\\ProductApi\\backend\\ProductApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nadun\\ProductApi\\Backend\\ProductApi.csproj",
+        "projectUniqueName": "C:\\Users\\nadun\\ProductApi\\backend\\ProductApi.csproj",
         "projectName": "ProductApi",
-        "projectPath": "C:\\Users\\nadun\\ProductApi\\Backend\\ProductApi.csproj",
+        "projectPath": "C:\\Users\\nadun\\ProductApi\\backend\\ProductApi.csproj",
         "packagesPath": "C:\\Users\\nadun\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nadun\\ProductApi\\Backend\\obj\\",
+        "outputPath": "C:\\Users\\nadun\\ProductApi\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nadun\\AppData\\Roaming\\NuGet\\NuGet.Config",
