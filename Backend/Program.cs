@@ -31,6 +31,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 app.UseCors("AllowFrontend");
+app.UseMiddleware<ProductApi.Middleware.ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
