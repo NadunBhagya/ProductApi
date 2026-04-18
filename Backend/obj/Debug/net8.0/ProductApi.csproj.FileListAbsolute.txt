@@ -136,3 +136,6 @@ C:\Users\nadun\ProductApi\Backend\obj\Debug\net8.0\refint\ProductApi.dll
 C:\Users\nadun\ProductApi\Backend\obj\Debug\net8.0\ProductApi.pdb
 C:\Users\nadun\ProductApi\Backend\obj\Debug\net8.0\ProductApi.genruntimeconfig.cache
 C:\Users\nadun\ProductApi\Backend\obj\Debug\net8.0\ref\ProductApi.dll
+C:\Users\nadun\ProductApi\backend\bin\Debug\net8.0\FluentValidation.dll
+C:\Users\nadun\ProductApi\backend\bin\Debug\net8.0\FluentValidation.AspNetCore.dll
+C:\Users\nadun\ProductApi\backend\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll

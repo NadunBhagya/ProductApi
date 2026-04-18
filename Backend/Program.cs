@@ -2,19 +2,29 @@ using ProductApi.Data;
 using Microsoft.EntityFrameworkCore;
 using ProductApi.Repositories;
 using ProductApi.Services;
+using ProductApi.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// DB
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Controllers
 builder.Services.AddControllers();
 
+// FluentValidation (NEW WAY)
+builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
+builder.Services.AddFluentValidationAutoValidation();
+
+// DI
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
-
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
@@ -26,14 +36,16 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Middleware
 app.UseCors("AllowFrontend");
 app.UseMiddleware<ProductApi.Middleware.ExceptionMiddleware>();
 
-// Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
 app.MapControllers();
 
