@@ -1,36 +1,67 @@
+import axios from "axios";
 
-const URL = "http://localhost:5212/api/product";
+const BASE_URL = "http://localhost:5212/api";
 
+// 🔥 GLOBAL fetch wrapper (like interceptor)
+const authFetch = async (url, options = {}) => {
+  const token = localStorage.getItem("token");
 
-export const fetchProducts = async () => {
-    const res = await fetch(URL);
-    return res.json();
-  };
-
-export const addProduct = async (product) => {
-  const response = await fetch("http://localhost:5212/api/product", {
-    method: "POST",
+  const res = await fetch(`${BASE_URL}${url}`, {
+    ...options,
     headers: {
       "Content-Type": "application/json",
+      Authorization: token ? `Bearer ${token}` : "",
+      ...options.headers,
     },
-    body: JSON.stringify(product),
   });
 
-  if (!response.ok) {
-    const data = await response.json();
-    throw data; // 💥 send validation errors to frontend
+  // 🔥 Auto logout on 401
+  if (res.status === 401) {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
   }
 
-  return response.json();
+  if (!res.ok) {
+    const text = await res.text();
+    throw text ? JSON.parse(text) : "Request failed";
+  }
+
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
 };
 
-export const deleteProduct = async (id, product) => {
-  await fetch(`${URL}/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
+
+// ✅ PRODUCTS
+
+export const fetchProducts = () => authFetch("/product");
+
+export const addProduct = (product) =>
+  authFetch("/product", {
+    method: "POST",
     body: JSON.stringify(product),
   });
-};
 
+export const deleteProduct = (id) =>
+  authFetch(`/product/${id}`, {
+    method: "DELETE",
+  });
+
+
+// ✅ LOGIN (keep axios or convert later)
+const API = axios.create({
+  baseURL: BASE_URL,
+});
+
+API.interceptors.request.use((req) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return req;
+});
+
+export const login = (data) => API.post("/auth/login", data);
+
+export default API;

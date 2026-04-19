@@ -9,6 +9,7 @@ function ProductList() {
   useEffect(() => {
     fetchProducts().then((data) => {
       setProducts(data);
+      console.log(localStorage.getItem("token"));
     });
   }, []);
 
@@ -20,6 +21,7 @@ function ProductList() {
     setProducts(products.filter(p => p.id !== id));
   };
 
+  
 
   return (
     <div>
@@ -43,6 +45,7 @@ function ProductList() {
                 <button className="btn btn-danger" onClick={() => handleDeleteProduct(p.id)}>
                   Delete
                 </button>
+                
               </td>
             </tr>
           ))}
