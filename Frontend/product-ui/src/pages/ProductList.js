@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { fetchProducts } from "../services/api";
 import { deleteProduct } from "../services/api";
+import {
+  Table, TableBody, TableCell,
+  TableContainer, TableHead, TableRow,
+  Paper, Button, Container
+} from "@mui/material";
 
 function ProductList() {
 
@@ -24,35 +29,35 @@ function ProductList() {
   
 
   return (
-    <div>
-      <h2 className="mb-4">Product List</h2>
+      <Container sx={{ mt: 4 }}>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
 
-      <table className="table table-bordered table-hover shadow">
-        <thead className="table-dark">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price ($)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map(p => (
-            <tr key={p.id}>
-              <td>{p.id}</td>
-              <td>{p.name}</td>
-              <td>{p.price}</td>
-              <td>
-                <button className="btn btn-danger" onClick={() => handleDeleteProduct(p.id)}>
-                  Delete
-                </button>
-                
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+          <TableBody>
+            {products.map((p) => (
+              <TableRow key={p.id}>
+                <TableCell>{p.name}</TableCell>
+                <TableCell>${p.price}</TableCell>
+                <TableCell>
+                  <Button color="error" onClick={() => handleDeleteProduct(p.id)}>
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+
+        </Table>
+      </TableContainer>
+      </Container>
+    );
 }
 
 export default ProductList;
