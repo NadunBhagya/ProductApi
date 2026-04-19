@@ -5,9 +5,15 @@ using ProductApi.Services;
 using ProductApi.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Serilog;
 
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog();
 
 // DB
 builder.Services.AddDbContext<AppDbContext>(options =>
