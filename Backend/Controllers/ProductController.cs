@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using ProductApi.DTO;
 using ProductApi.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProductApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
